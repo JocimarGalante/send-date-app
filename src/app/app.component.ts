@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ApiService } from './api.service';
+import { Info } from './info';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'send-date-app';
+  info = new Info();
+
+  constructor(private apiService: ApiService) {
+
+  }
+
+  ngOnInit() {
+    this.info.date = new Date().toISOString()
+  }
+
+  send() {
+    this.apiService.sendDate(this.info)
+      .subscribe(data => {
+        console.log(data)
+      })
+  }
 }
